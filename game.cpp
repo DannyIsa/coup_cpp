@@ -13,7 +13,7 @@ void Game::addPlayer(Player &player) {
   if (playerTurn == nullptr) {
     playerTurn = &player;
   }
-  allPlayers.push_back(player);
+  allPlayers.push_back(&player);
 }
 
 void Game::removePlayer(Player &player) {

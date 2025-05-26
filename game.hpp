@@ -8,7 +8,7 @@ class Player;
 
 class Game {
 protected:
-  vector<Player> allPlayers;
+  vector<Player *> allPlayers;
   Player *playerTurn;
 
 public:
