@@ -1,7 +1,8 @@
 #include "player.hpp"
 
 Player::Player(Game &game, string name)
-    : game(game), name(name), coins(0), is_alive(true) {
+    : game(game), name(name), coins(0), is_alive(true),
+      lastAction(ActionType::NONE) {
   game.addPlayer(*this);
 }
 
@@ -35,4 +36,42 @@ void Player::removeCoins(int amount) {
   coins -= amount;
 }
 
-void Player::gather() {}
+bool Player::isInGame() { return &game != nullptr; }
+
+ActionType Player::getLastAction() const { return lastAction; }
+
+void Player::clearLastAction() { lastAction = ActionType::NONE; }
+
+void Player::gather() {
+  game.performAction(*this, ActionType::GATHER);
+  lastAction = ActionType::GATHER;
+}
+void Player::tax() {
+  game.performAction(*this, ActionType::TAX);
+  lastAction = ActionType::TAX;
+}
+void Player::bribe() {
+  game.performAction(*this, ActionType::BRIBE);
+  lastAction = ActionType::BRIBE;
+}
+void Player::arrest(Player &target) {
+  if (&target == nullptr) {
+    throw invalid_argument("Target cannot be null");
+  }
+  game.performAction(*this, ActionType::ARREST, &target);
+  lastAction = ActionType::ARREST;
+}
+void Player::sanction(Player &target) {
+  if (&target == nullptr) {
+    throw invalid_argument("Target cannot be null");
+  }
+  game.performAction(*this, ActionType::SANCTION, &target);
+  lastAction = ActionType::SANCTION;
+}
+void Player::coup(Player &target) {
+  if (&target == nullptr) {
+    throw invalid_argument("Target cannot be null");
+  }
+  game.performAction(*this, ActionType::COUP, &target);
+  lastAction = ActionType::COUP;
+}

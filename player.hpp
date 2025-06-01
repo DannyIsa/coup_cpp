@@ -11,6 +11,7 @@ protected:
   string name;
   int coins;
   bool is_alive;
+  ActionType lastAction;
 
 public:
   Player(Game &game, string name);
@@ -22,6 +23,11 @@ public:
   void removePlayer();
   void addCoins(int amount);
   void removeCoins(int amount);
+  bool isInGame();
+
+  // Action tracking
+  ActionType getLastAction() const;
+  void clearLastAction();
 
   virtual void gather();
   virtual void tax();
