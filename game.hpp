@@ -18,31 +18,30 @@ public:
   Game();
   ~Game() = default;
 
-  Player &turn();
+  string turn();
   vector<string> players();
+  string winner();
   void addPlayer(Player &player);
   void removePlayer(Player &player);
 
-  void performAction(Player &player, ActionType action,
-                     Player *target = nullptr);
-
   void nextTurn();
+  void validatePlayer(Player &player, ActionType action, int price = 0);
+  void validateTarget(Player &target);
+
+  // Action management methods
+  void consumeAction();
+  void addActions(int amount);
 
 private:
+  void resetPlayer(Player &player);
+
   // Validations
-  void validatePlayer(Player &player);
-  void validateTarget(Player &target);
   void validatePlayerTurn(Player &player);
   void validateTargetInGame(Player &target);
   void validatePlayerAlive(Player &player);
-  void validatePlayerNotNull(Player &player);
-  void validatePlayerHasActions(Player &player);
-
-  // Action implementations
-  void executeGather(Player &player);
-  void executeTax(Player &player);
-  void executeBribe(Player &player);
-  void executeArrest(Player &player, Player &target);
-  void executeSanction(Player &player, Player &target);
-  void executeCoup(Player &player, Player &target);
+  void validatePlayerHasActions();
+  void validatePlayerHasEnoughCoins(Player &player, int price);
+  void validatePlayerHasLessThan10Coins(Player &player, ActionType action);
+  void validatePlayerIsntSanctioned(Player &player, ActionType action);
+  void validateCanArrest(Player &player, ActionType action);
 };
