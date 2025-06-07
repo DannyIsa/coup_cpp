@@ -27,6 +27,7 @@ public:
   void nextTurn();
   void validatePlayer(Player &player, ActionType action, int price = 0);
   void validateTarget(Player &target);
+  void handleSpecialSanction(Player &target);
 
   // Action management methods
   void consumeAction();

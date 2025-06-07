@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "baron.hpp"
 #include "governor.hpp"
 #include "player.hpp"
 
@@ -52,6 +53,13 @@ void Game::validatePlayer(Player &player, ActionType action, int price) {
 void Game::validateTarget(Player &target) {
   validatePlayerAlive(target);
   validateTargetInGame(target);
+}
+
+void Game::handleSpecialSanction(Player &target) {
+  Baron *baron = dynamic_cast<Baron *>(&target);
+  if (baron != nullptr) {
+    baron->addCoins(1);
+  }
 }
 
 void Game::validateCanArrest(Player &player, ActionType action) {
