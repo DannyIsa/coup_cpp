@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "baron.hpp"
 #include "general.hpp"
+#include "judge.hpp"
 #include "player.hpp"
 
 Game::Game() : playerTurn(nullptr), remainingActions(1) {}
@@ -55,10 +56,20 @@ void Game::validateTarget(Player &target) {
   validateTargetInGame(target);
 }
 
-void Game::handleSpecialSanction(Player &target) {
+void Game::handleSpecialSanction(Player &sanctioner, Player &target) {
   Baron *baron = dynamic_cast<Baron *>(&target);
   if (baron != nullptr) {
     baron->addCoins(1);
+  }
+
+  Judge *judge = dynamic_cast<Judge *>(&target);
+  if (judge != nullptr) {
+    if (sanctioner.getCoins() >= 4) {
+      sanctioner.removeCoins(1);
+    } else {
+      throw invalid_argument(
+          "Player does not have enough coins to pay for sanction");
+    }
   }
 }
 

@@ -27,7 +27,7 @@ public:
   void nextTurn();
   void validatePlayer(Player &player, ActionType action, int price = 0);
   void validateTarget(Player &target);
-  void handleSpecialSanction(Player &target);
+  void handleSpecialSanction(Player &sanctioner, Player &target);
   void handleSpecialArrest(Player &target);
 
   // Action management methods
@@ -35,15 +35,15 @@ public:
   void addActions(int amount);
 
   void validateTargetInGame(Player &target);
+  void validatePlayerHasEnoughCoins(Player &player, int price);
+  void validatePlayerTurn(Player &player);
+  void validatePlayerHasActions();
 
 private:
   void resetPlayer(Player &player);
 
   // Validations
-  void validatePlayerTurn(Player &player);
   void validatePlayerAlive(Player &player);
-  void validatePlayerHasActions();
-  void validatePlayerHasEnoughCoins(Player &player, int price);
   void validatePlayerHasLessThan10Coins(Player &player, ActionType action);
   void validatePlayerIsntSanctioned(Player &player, ActionType action);
   void validateCanArrest(Player &player, ActionType action);

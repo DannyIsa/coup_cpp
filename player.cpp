@@ -112,7 +112,7 @@ void Player::sanction(Player &target) {
   game.validatePlayer(*this, ActionType::SANCTION, 3);
   game.validateTarget(target);
 
-  game.handleSpecialSanction(target);
+  game.handleSpecialSanction(*this, target);
 
   removeCoins(3);
   target.setSanctioned(true);
