@@ -3,7 +3,7 @@
 Player::Player(Game &game, string name)
     : game(game), name(name), coins(0), is_alive(true),
       lastAction(ActionType::NONE), lastArrested(nullptr), sanctioned(false),
-      arrestPrevented(false) {
+      arrestPrevented(false), coupPrevented(false) {
   game.addPlayer(*this);
 }
 
@@ -24,6 +24,10 @@ void Player::setSanctioned(bool value) { sanctioned = value; }
 bool Player::isArrestPrevented() { return arrestPrevented; }
 
 void Player::setArrestPrevented(bool value) { arrestPrevented = value; }
+
+bool Player::isCoupPrevented() { return coupPrevented; }
+
+void Player::setCoupPrevented(bool value) { coupPrevented = value; }
 
 void Player::removePlayer() {
   if (!is_alive) {
@@ -94,6 +98,7 @@ void Player::arrest(Player &target) {
   if (target.getCoins() < 1) {
     throw invalid_argument("Target has no coins to arrest");
   }
+  game.handleSpecialArrest(target);
 
   target.removeCoins(1);
   addCoins(1);
@@ -105,7 +110,6 @@ void Player::arrest(Player &target) {
 
 void Player::sanction(Player &target) {
   game.validatePlayer(*this, ActionType::SANCTION, 3);
-  game.validateTarget(target);
   game.validateTarget(target);
 
   game.handleSpecialSanction(target);
@@ -120,6 +124,10 @@ void Player::sanction(Player &target) {
 void Player::coup(Player &target) {
   game.validatePlayer(*this, ActionType::COUP, 7);
   game.validateTarget(target);
+
+  if (target.isCoupPrevented()) {
+    throw invalid_argument("Target has coup prevented");
+  }
 
   removeCoins(7);
   target.removePlayer();

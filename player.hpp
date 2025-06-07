@@ -15,6 +15,7 @@ protected:
   Player *lastArrested;
   bool sanctioned;
   bool arrestPrevented;
+  bool coupPrevented;
 
 public:
   Player(Game &game, string name);
@@ -29,6 +30,8 @@ public:
   void setSanctioned(bool sanctioned);
   bool isArrestPrevented();
   void setArrestPrevented(bool prevented);
+  void setCoupPrevented(bool prevented);
+  bool isCoupPrevented();
   void removePlayer();
   void addCoins(int amount);
   void removeCoins(int amount);

@@ -28,17 +28,19 @@ public:
   void validatePlayer(Player &player, ActionType action, int price = 0);
   void validateTarget(Player &target);
   void handleSpecialSanction(Player &target);
+  void handleSpecialArrest(Player &target);
 
   // Action management methods
   void consumeAction();
   void addActions(int amount);
+
+  void validateTargetInGame(Player &target);
 
 private:
   void resetPlayer(Player &player);
 
   // Validations
   void validatePlayerTurn(Player &player);
-  void validateTargetInGame(Player &target);
   void validatePlayerAlive(Player &player);
   void validatePlayerHasActions();
   void validatePlayerHasEnoughCoins(Player &player, int price);

@@ -1,6 +1,6 @@
 #include "game.hpp"
 #include "baron.hpp"
-#include "governor.hpp"
+#include "general.hpp"
 #include "player.hpp"
 
 Game::Game() : playerTurn(nullptr), remainingActions(1) {}
@@ -59,6 +59,13 @@ void Game::handleSpecialSanction(Player &target) {
   Baron *baron = dynamic_cast<Baron *>(&target);
   if (baron != nullptr) {
     baron->addCoins(1);
+  }
+}
+
+void Game::handleSpecialArrest(Player &target) {
+  General *general = dynamic_cast<General *>(&target);
+  if (general != nullptr) {
+    general->addCoins(1);
   }
 }
 
@@ -126,6 +133,7 @@ void Game::consumeAction() {
 void Game::resetPlayer(Player &player) {
   player.setSanctioned(false);
   player.setArrestPrevented(false);
+  player.setCoupPrevented(false);
   remainingActions = 1;
 }
 
