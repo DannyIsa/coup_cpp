@@ -2,6 +2,7 @@
 #include "baron.hpp"
 #include "general.hpp"
 #include "judge.hpp"
+#include "merchant.hpp"
 #include "player.hpp"
 
 Game::Game() : playerTurn(nullptr), remainingActions(1) {}
@@ -73,10 +74,30 @@ void Game::handleSpecialSanction(Player &sanctioner, Player &target) {
   }
 }
 
-void Game::handleSpecialArrest(Player &target) {
+bool Game::handleSpecialArrest(Player &target) {
   General *general = dynamic_cast<General *>(&target);
   if (general != nullptr) {
-    general->addCoins(1);
+    general->addCoins(1); // General gets back the coin
+    return false;
+  }
+
+  Merchant *merchant = dynamic_cast<Merchant *>(&target);
+  if (merchant != nullptr) {
+    if (merchant->getCoins() >= 2) {
+      merchant->removeCoins(2);
+    } else {
+      merchant->removeCoins(merchant->getCoins());
+    }
+    return true;
+  }
+
+  return false; // Normal arrest
+}
+
+void Game::handleStartOfTurn(Player &player) {
+  Merchant *merchant = dynamic_cast<Merchant *>(&player);
+  if (merchant != nullptr && merchant->getCoins() >= 3) {
+    merchant->addCoins(1); // Merchant bonus
   }
 }
 
@@ -146,6 +167,8 @@ void Game::resetPlayer(Player &player) {
   player.setArrestPrevented(false);
   player.setCoupPrevented(false);
   remainingActions = 1;
+
+  handleStartOfTurn(player);
 }
 
 void Game::addActions(int amount) { remainingActions += amount; }

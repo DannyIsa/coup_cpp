@@ -72,7 +72,7 @@ void Player::gather() {
 void Player::tax() {
   game.validatePlayer(*this, ActionType::TAX);
 
-  addCoins(2); // Base implementation - Governor will override
+  addCoins(2);
   lastAction = ActionType::TAX;
 
   game.consumeAction();
@@ -98,10 +98,15 @@ void Player::arrest(Player &target) {
   if (target.getCoins() < 1) {
     throw invalid_argument("Target has no coins to arrest");
   }
-  game.handleSpecialArrest(target);
 
-  target.removeCoins(1);
-  addCoins(1);
+  bool specialHandled = game.handleSpecialArrest(target);
+
+  if (!specialHandled) {
+    // Normal arrest: target loses 1 coin, attacker gains 1 coin
+    target.removeCoins(1);
+    addCoins(1);
+  }
+
   setLastArrested(&target);
   lastAction = ActionType::ARREST;
 
