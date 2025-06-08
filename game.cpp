@@ -25,8 +25,18 @@ vector<string> Game::players() {
 }
 
 string Game::winner() {
-  if (allPlayers.size() == 1) {
-    return allPlayers[0]->getName();
+  int aliveCount = 0;
+  Player *lastAlive = nullptr;
+
+  for (Player *player : allPlayers) {
+    if (player->isAlive()) {
+      aliveCount++;
+      lastAlive = player;
+    }
+  }
+
+  if (aliveCount == 1) {
+    return lastAlive->getName();
   }
   throw invalid_argument("No winner");
 }
