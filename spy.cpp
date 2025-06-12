@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "spy.hpp"
 
 Spy::Spy(Game &game, string name) : Player(game, name) {}

@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #pragma once
 
 #include <string>
@@ -12,7 +14,7 @@ class Game {
 protected:
   vector<Player *> allPlayers;
   Player *playerTurn;
-  int remainingActions; // Number of actions left in current turn
+  int remainingActions; // Number of actions left
 
 public:
   Game();

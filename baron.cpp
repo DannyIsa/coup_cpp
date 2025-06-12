@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "baron.hpp"
 
 Baron::Baron(Game &game, string name) : Player(game, name) {}

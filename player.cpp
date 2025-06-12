@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "player.hpp"
 
 Player::Player(Game &game, string name)
@@ -84,7 +86,7 @@ void Player::bribe() {
   removeCoins(4);
   lastAction = ActionType::BRIBE;
 
-  game.addActions(2);
+  game.addActions(1);
 }
 
 void Player::arrest(Player &target) {

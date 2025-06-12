@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "governor.hpp"
 
 Governor::Governor(Game &game, string name) : Player(game, name) {}

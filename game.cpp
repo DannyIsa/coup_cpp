@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "game.hpp"
 #include "baron.hpp"
 #include "general.hpp"

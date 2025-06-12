@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "general.hpp"
 
 General::General(Game &game, string name) : Player(game, name) {}

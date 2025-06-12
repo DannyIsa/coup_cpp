@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #include "judge.hpp"
 
 Judge::Judge(Game &game, string name) : Player(game, name) {}

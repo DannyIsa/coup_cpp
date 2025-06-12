@@ -1,3 +1,5 @@
+// daniisakov@gmail.com
+
 #pragma once
 
 #include "player.hpp"

@@ -1,0 +1,42 @@
+# daniisakov@gmail.com
+
+all: build
+
+build: main.cpp game.o player.o governor.o baron.o general.o judge.o merchant.o spy.o
+	g++ -std=c++17 -o Main main.cpp game.o player.o governor.o baron.o general.o judge.o merchant.o spy.o -I/opt/homebrew/Cellar/sfml@2/2.6.2_1/include -L/opt/homebrew/Cellar/sfml@2/2.6.2_1/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+Main: build
+	./Main
+
+game.o: game.cpp
+	g++ -std=c++17 -c game.cpp -o game.o
+
+player.o: player.cpp
+	g++ -std=c++17 -c player.cpp -o player.o
+
+governor.o: governor.cpp
+	g++ -std=c++17 -c governor.cpp -o governor.o
+
+baron.o: baron.cpp
+	g++ -std=c++17 -c baron.cpp -o baron.o
+
+general.o: general.cpp
+	g++ -std=c++17 -c general.cpp -o general.o
+
+judge.o: judge.cpp
+	g++ -std=c++17 -c judge.cpp -o judge.o
+
+merchant.o: merchant.cpp
+	g++ -std=c++17 -c merchant.cpp -o merchant.o
+
+spy.o: spy.cpp
+	g++ -std=c++17 -c spy.cpp -o spy.o
+
+test: test_coup.cpp game.o player.o governor.o baron.o general.o judge.o merchant.o spy.o
+	g++ -std=c++17 -o test test_coup.cpp game.o player.o governor.o baron.o general.o judge.o merchant.o spy.o
+
+valgrind: Main
+	valgrind --leak-check=full ./Main
+
+clean:
+	rm -f *.o Main test main 
